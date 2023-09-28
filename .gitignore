@@ -13,3 +13,4 @@ yarn-error.log*
 .env.production
 pnpm-lock.yaml
 yarn.lock
+.env
