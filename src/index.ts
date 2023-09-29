@@ -2,7 +2,7 @@
 import express from "express";
 import cors from "cors";
 import dotenv from "dotenv";
-import routes from "./routes";
+import router from "./routes/index";
 
 // configuration
 dotenv.config();
@@ -12,7 +12,7 @@ app.use(express.json());
 const port = process.env.PORT || 3000;
 
 // routes
-app.use("/api", routes);
+app.use("/api", router);
 
 // server listening
 app.listen(port, () => {
