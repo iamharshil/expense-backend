@@ -4,10 +4,10 @@ import * as ExpenseController from "./expense.controller";
 const ExpenseRouter = Router();
 
 ExpenseRouter.get("/", ExpenseController.index)
-	.post("/", ExpenseController.create)
+	.post("/create", ExpenseController.create)
 	.get("/:id", ExpenseController.show)
-	.put("/:id", ExpenseController.update)
-	.delete("/:id", ExpenseController.destroy)
+	.put("/update/:id", ExpenseController.update)
+	.delete("/delete:id", ExpenseController.destroy)
 	.all("/*", (req, res) => res.status(404).send("Not Found"));
 
 export default ExpenseRouter;

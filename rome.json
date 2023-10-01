@@ -1,5 +1,8 @@
 {
     "formatter": {
         "lineWidth": 150
+    },
+    "linter": {
+        "ignore": ["node_modules/**"]
     }
 }

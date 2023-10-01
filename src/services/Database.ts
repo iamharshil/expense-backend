@@ -1,4 +1,5 @@
 import mongoose, { ConnectOptions } from "mongoose";
+import { MONGODB_URI } from "../config";
 
 let cachedConnection: typeof mongoose | null = null;
 
@@ -9,7 +10,7 @@ const MongoDB = async () => {
 			return cachedConnection;
 		}
 
-		if (!process.env.MONGODB_URI) {
+		if (!MONGODB_URI) {
 			return console.log("MONGODB_URI is not defined");
 		}
 
@@ -17,7 +18,7 @@ const MongoDB = async () => {
 			autoIndex: true,
 		};
 
-		const connection = await mongoose.connect(process.env.MONGODB_URI, options);
+		const connection = await mongoose.connect(MONGODB_URI, options);
 		cachedConnection = connection;
 		console.log("MongoDB new connection");
 		return connection;

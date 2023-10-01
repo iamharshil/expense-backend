@@ -1,0 +1,4 @@
+[0mGET /api/v1/expense [32m200[0m 72.976 ms - 248[0m
+[0mGET /api/v1/expense [32m200[0m 222.144 ms - 248[0m
+[0mGET /api/v1/expense [36m304[0m 31.167 ms - -[0m
+[0mGET /api/v1/expense [36m304[0m 30.748 ms - -[0m

@@ -1,0 +1,13 @@
+{
+    "ignorePaths": [
+        "node_modules",
+        "dist",
+        "yarn.lock",
+        "package-lock.json",
+        "pnpm-lock.yaml",
+        "package.json",
+        "tsconfig.json",
+        "tslint.json"
+    ],
+    "ignoreWords": ["subapp"]
+}
