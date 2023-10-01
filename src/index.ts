@@ -1,20 +1,19 @@
-// setup of express with typescript and mongoose
 import express from "express";
 import cors from "cors";
-import dotenv from "dotenv";
-import router from "./routes/index";
+import compression from "compression";
+import morgan from "morgan";
 
 // configuration
-dotenv.config();
 const app = express();
+app.use(express.json({ strict: true }));
+app.use(express.urlencoded({ extended: true }));
+app.use(express.static("public"));
 app.use(cors());
-app.use(express.json());
-const port = process.env.PORT || 3000;
+app.use(morgan("dev"));
+app.use(compression());
+// subapp.on("mount", () => { ... });
+app.disable("/api/v2");
+app.set("title", "Expense API");
 
-// routes
-app.use("/api", router);
-
-// server listening
-app.listen(port, () => {
-	console.log(`server listening on http://localhost:${port}`);
-});
+// export
+export default app;
