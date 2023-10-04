@@ -15,6 +15,7 @@ const index = async (req: Request, res: Response) => {
 const register = async (req: Request, res: Response) => {
 	try {
 		const rawData = req.body;
+		console.log("rawData", rawData);
 		const user = new User({ username: rawData.username, email: rawData.email, password: encrypt_data(rawData.password), date: current_time() });
 		await user.save();
 		return res.status(200).json({ success: true, message: "User created successfully." });

@@ -19,10 +19,6 @@ const ExpenseSchema = new Schema(
 			minLength: 4,
 			maxLength: 20,
 		},
-		date: {
-			type: Date,
-			required: true,
-		},
 	},
 	{ timestamps: true, versionKey: false },
 );

@@ -1,6 +1,6 @@
 import { Request, Response } from "express";
 import Expense from "../../models/Expense.model";
-import { current_time } from "../../utils/helper.util";
+import { current_time, validate_expense } from "../../utils/helper.util";
 
 const index = async (req: Request, res: Response) => {
 	try {
@@ -15,9 +15,15 @@ const index = async (req: Request, res: Response) => {
 const create = async (req: Request, res: Response) => {
 	try {
 		const rawData = req.body;
-		const expense = new Expense({ title: rawData.title, amount: rawData.amount, category: rawData.category, date: current_time() });
-		await expense.save();
-		return res.status(200).json({ success: true, message: "Expense created successfully." });
+		const validation = await validate_expense(rawData);
+		console.log("validation", validation);
+		if (validation) {
+			const expense = new Expense({ title: rawData.title, amount: rawData.amount, category: rawData.category, date: current_time() });
+			await expense.save();
+			return res.status(200).json({ success: true, message: "Expense created successfully." });
+		} else {
+			return res.status(400).json({ success: false, message: validation });
+		}
 	} catch (err) {
 		console.log(err);
 		return res.status(500).json({ success: false, message: "Internal Server Error" });
