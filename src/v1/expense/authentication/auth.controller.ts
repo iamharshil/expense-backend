@@ -34,7 +34,7 @@ const login = async (req: Request, res: Response) => {
 			if (match_password) {
 				const token = generate_token(encrypt_data(user[0]._id));
 				if (token) {
-					res.cookie("token", token, { maxAge: 86400, httpOnly: true });
+					res.cookie("auth_token", token, { maxAge: 86400, httpOnly: true });
 					return res.status(200).json({ success: true, message: "Login Successful", token: token });
 				} else {
 					return res.status(500).json({ success: false, message: "Internal Server Error" });
