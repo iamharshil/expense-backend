@@ -5,14 +5,18 @@ import morgan from "morgan";
 import fs from "fs";
 import moment from "moment";
 import cookieParser from "cookie-parser";
+import bodyParser from "body-parser";
 
 // configuration
 const app = express();
-app.use(express.json({ strict: true }));
-app.use(express.urlencoded({ extended: true }));
 app.use(express.static("public"));
-app.use(cors());
 app.use(cookieParser());
+app.use(cors({
+	credentials: true,
+	origin: ['http://localhost:3000', "http://127.0.0.1:3000"]
+}));
+app.use(bodyParser.json());
+app.use(bodyParser.urlencoded({ extended: true }));
 morgan.token("date", () => moment().format());
 app.use(morgan("dev"));
 app.use(

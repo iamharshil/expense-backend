@@ -28,22 +28,30 @@ const register = async (req: Request, res: Response) => {
 const login = async (req: Request, res: Response) => {
 	try {
 		const rawData = req.body;
-		const user = await User.find({ $or: [{ username: rawData.username }, { email: rawData.email }] });
+		const user = await User.find({ $or: [{ username: rawData.emailOrUsername }, { email: rawData.emailOrUsername }] });
 		if (user && user.length > 0) {
 			const match_password = user[0].password === encrypt_data(rawData.password);
 			if (match_password) {
-				const token = generate_token(encrypt_data(user[0]._id));
+				const token = generate_token(encrypt_data(user[0]._id.toString()));
 				if (token) {
-					res.cookie("auth_token", token, { maxAge: 86400, httpOnly: true });
-					return res.status(200).json({ success: true, message: "Login Successful", token: token });
+					res.cookie("auth_token", token, {
+						httpOnly: true,
+						// secure: process.env.NODE_ENV !== "development",
+						// sameSite: "lax",
+						maxAge: 24 * 60 * 60 * 1000,
+						// path: "/",
+						// domain: "http://localhost:3000",
+					});
+					// res.setHeader('Set-Cookie', `auth_token=${token}; Path=/; HttpOnly`);
+					return res.status(200).json({ success: true, message: "Login Successful", data: token });
 				} else {
 					return res.status(500).json({ success: false, message: "Internal Server Error" });
 				}
 			} else {
-				return res.status(401).json({ success: false, message: "Invalid Password" });
+				return res.status(400).json({ success: false, message: "Invalid Password" });
 			}
 		} else {
-			return res.status(401).json({ success: false, message: "Invalid Username or Email" });
+			return res.status(400).json({ success: false, message: "Invalid Username or Email" });
 		}
 	} catch (error) {
 		console.log(error);
